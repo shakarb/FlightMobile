@@ -19,8 +19,9 @@ namespace FlightMobileApp.Models
 
         public string CommandToSet()
         {
-            string command = "set /controls/engines/current-engine/throttle " + this.throttle.ToString() + "\r\n"
-                + "set /controls/flight/rudder " + this.rudder.ToString() + "\r\n"
+            string command =
+                "set /controls/engines/current-engine/throttle " + this.throttle.ToString() + "\r\n"
+                + "set /controls/flight/rudder " + String.Format("{0:0.##}", this.rudder) + "\r\n"
                 + "set /controls/flight/aileron " + this.aileron.ToString() + "\r\n"
                 + "set /controls/flight/elevator " + this.elevator.ToString() + "\r\n";
             return command;
