@@ -58,12 +58,11 @@ namespace FlightMobileApp.Models
                 connected = true;
                 //defining writer and reader for stream
                 NetworkStream stream = client.GetStream();
-                streamWriter = new System.IO.StreamWriter(stream);
+                streamWriter = new StreamWriter(stream);
                 streamWriter.AutoFlush = true;
-                streamReader = new System.IO.StreamReader(stream);
+                streamReader = new StreamReader(stream);
                 //first command when we connect
                 streamWriter.WriteLine("data\n");
-                streamReader.ReadLine();
             }
             catch (Exception ex)
             {
@@ -96,7 +95,6 @@ namespace FlightMobileApp.Models
             string data;
             try
             {
-                mutex.WaitOne();          
                 // write the data command to the simulator
                 streamWriter.WriteLine(command);
                 // Reading.
@@ -119,10 +117,6 @@ namespace FlightMobileApp.Models
                 Console.WriteLine("\n\n\n\n\n****** Reading got exception ******\n");
                 Console.WriteLine(exception.Message + "\n\n\n\n\n");
             }
-            finally
-            {
-                mutex.ReleaseMutex();
-            }
             return null;
         }
 
@@ -131,30 +125,19 @@ namespace FlightMobileApp.Models
         /// and the response won't affect other processes that reads from the server 
         /// </summary>
         /// <param name="command">command to the server</param>
-        public void write(Command command)
+        public void write(string command)
         {
             try
             {
-                mutex.WaitOne();
                 // write the data command to the simulator
-                streamWriter.WriteLine(command.CommandToSet());
-                //check that the arguments passed correctly to the simulator
-                double aileron = Double.Parse(read("get /controls/flight/aileron"));
-                double rudder = Double.Parse(read("get /controls/flight/rudder"));
-                double elevator = Double.Parse(read("get /controls/flight/elevator"));
-                double throttle = Double.Parse(read("get /controls/engines/current-engine/throttle"));
-                //check validation
-                if(aileron != command.aileron || rudder != command.rudder ||
-                        elevator != command.elevator || throttle != command.throttle)
-                {
-                    throw new Exception();
-                }
-                mutex.ReleaseMutex();
+                streamWriter.WriteLine(command);
+                Console.WriteLine(command);
             }
             catch (Exception exception)
             {
-                mutex.ReleaseMutex();
-                disconnect();
+                //disconnect();
+                //connected = false;
+                throw new Exception();
             }
         }
     }

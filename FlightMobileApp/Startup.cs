@@ -36,11 +36,11 @@ namespace FlightMobileApp
              int port = Int32.Parse(_config["Port"]); // get the port from appsettings.json
 
             //Add the TelnetClient
-            ITelnetClient tcp = new MyTelnetClient(ip , port);
-            services.AddSingleton<ITelnetClient>(tcp);
+            ITelnetClient tlc = new MyTelnetClient(ip , port);
+            services.AddSingleton<ITelnetClient>(tlc);
 
             //Add singleton FlightGearClient 
-            IFlightGearClient fgc = new FlightGearClient(tcp);
+            IFlightGearClient fgc = new FlightGearClient(tlc);
             services.AddSingleton<IFlightGearClient>(fgc);
             //Strting going over the blocking queue
             fgc.Start();
@@ -72,7 +72,7 @@ namespace FlightMobileApp
                 // Redirect to an external URL
                 if (url.Contains("/screenshot"))
                 {
-                    context.Response.Redirect("http://localhost:" + _config["HTTPSimulatorPort"] + "/screenshot");
+                    context.Response.Redirect("http://10.0.2.2:" + _config["HTTPSimulatorPort"] + "/screenshot");
                     return;   // short circuit
                 }
 

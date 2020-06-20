@@ -8,7 +8,7 @@ namespace FlightMobileApp.Models
     public interface ITelnetClient
     {
         void connect();
-        void write(Command command);
+        void write(string command);
         string read(string command); //blocking call 
         void disconnect();
         bool isConnected();

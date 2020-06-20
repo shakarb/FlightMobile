@@ -42,7 +42,22 @@ namespace FlightMobileApp.Models
                 Result res;
                 try 
                 {
-                    _tcp.write(command.Command);
+        
+                    _tcp.write("set /controls/engines/current-engine/throttle " + String.Format("{0:0.##}", command.Command.throttle) + "\r\n");
+                    _tcp.write("set /controls/flight/rudder " + String.Format("{0:0.##}", command.Command.rudder) + "\r\n");
+                    _tcp.write("set /controls/flight/aileron " + String.Format("{0:0.##}", command.Command.aileron) + "\r\n");
+                    _tcp.write("set /controls/flight/elevator " + String.Format("{0:0.##}", command.Command.elevator) + "\r\n");
+
+                    double aileron = Double.Parse(_tcp.read("get /controls/flight/aileron"));
+                    double rudder = Double.Parse(_tcp.read("get /controls/flight/rudder"));
+                    double elevator = Double.Parse(_tcp.read("get /controls/flight/elevator"));
+                    double throttle = Double.Parse(_tcp.read("get /controls/engines/current-engine/throttle"));
+                    //check validation
+                    if (aileron != command.Command.aileron || rudder != command.Command.rudder ||
+                            elevator != command.Command.elevator || throttle != command.Command.throttle)
+                    {
+                        res = Result.NotOk;
+                    }
                     res = Result.Ok;
                 }
                 catch
