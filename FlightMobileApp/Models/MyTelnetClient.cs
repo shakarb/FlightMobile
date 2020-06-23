@@ -97,13 +97,7 @@ namespace FlightMobileApp.Models
                 // write the data command to the simulator
                 streamWriter.WriteLine(command);
                 // Reading.
-                //byte[] read = new byte[1024];
                 data = streamReader.ReadLine();
-                // Here we read the server response so the server (the buffer) won't be with unnecessary information
-                // that another thread by mistake can read instead of necessary information.
-                //client.GetStream().Read(read, 0, 1024);
-                //data = Encoding.ASCII.GetString(read, 0, read.Length);
-
                 return data;
             }
             catch (IOException io)
@@ -134,8 +128,6 @@ namespace FlightMobileApp.Models
             }
             catch (Exception exception)
             {
-                //disconnect();
-                //connected = false;
                 throw new Exception();
             }
         }

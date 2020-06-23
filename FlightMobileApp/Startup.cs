@@ -17,13 +17,9 @@ namespace FlightMobileApp
 {
     public class Startup
     {
-        private IConfiguration _config;
-
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            _config = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -33,8 +29,8 @@ namespace FlightMobileApp
         {
             services.AddControllers();
             //get the ip and port configuration
-            string ip = _config["Ip"]; // get the ip from appsettings.json
-             int port = Int32.Parse(_config["Port"]); // get the port from appsettings.json
+            string ip = Configuration["Ip"]; // get the ip from appsettings.json
+             int port = Int32.Parse(Configuration["Port"]); // get the port from appsettings.json
 
             //Add the TelnetClient
             ITelnetClient tlc = new MyTelnetClient(ip , port);
@@ -65,22 +61,6 @@ namespace FlightMobileApp
             
 
             app.UseDefaultFiles();
-
-            ////redirect GET /screenshot to the simulator http server
-            //app.Use(async (context, next) =>
-            //{
-            //    var url = context.Request.Path.Value;
-
-            //    // Redirect to an external URL
-            //    if (url.Contains("/screenshot"))
-            //    {
-            //        context.Response.Redirect(_config["HTTPSimulatorIP"] +":" + _config["HTTPSimulatorPort"] + "/screenshot");
-            //        return; 
-            //    }
-
-            //    await next();
-            //});
-
 
             app.UseEndpoints(endpoints =>
             {
