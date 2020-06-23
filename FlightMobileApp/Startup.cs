@@ -66,20 +66,20 @@ namespace FlightMobileApp
 
             app.UseDefaultFiles();
 
-            //redirect GET /screenshot to the simulator http server
-            app.Use(async (context, next) =>
-            {
-                var url = context.Request.Path.Value;
+            ////redirect GET /screenshot to the simulator http server
+            //app.Use(async (context, next) =>
+            //{
+            //    var url = context.Request.Path.Value;
 
-                // Redirect to an external URL
-                if (url.Contains("/screenshot"))
-                {
-                    context.Response.Redirect(_config["HTTPSimulatorIP"] +":" + _config["HTTPSimulatorPort"] + "/screenshot");
-                    return; 
-                }
+            //    // Redirect to an external URL
+            //    if (url.Contains("/screenshot"))
+            //    {
+            //        context.Response.Redirect(_config["HTTPSimulatorIP"] +":" + _config["HTTPSimulatorPort"] + "/screenshot");
+            //        return; 
+            //    }
 
-                await next();
-            });
+            //    await next();
+            //});
 
 
             app.UseEndpoints(endpoints =>
