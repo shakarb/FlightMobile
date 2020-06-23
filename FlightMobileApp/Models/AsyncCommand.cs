@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 namespace FlightMobileApp.Models
 {
     public enum Result { Ok, NotOk }
-
+    /// <summary>
+    ///  Command class to hold the incoming command json values
+    /// </summary>
     public class Command {
 
         public double aileron { get; set; } 
@@ -16,18 +18,12 @@ namespace FlightMobileApp.Models
         public double throttle { get; set; }
 
         public double elevator { get; set; }
-
-        public string CommandToSet()
-        {
-            string command =
-                "set /controls/engines/current-engine/throttle " + this.throttle.ToString() + "\r\n"
-                + "set /controls/flight/rudder " + String.Format("{0:0.##}", this.rudder) + "\r\n"
-                + "set /controls/flight/aileron " + this.aileron.ToString() + "\r\n"
-                + "set /controls/flight/elevator " + this.elevator.ToString() + "\r\n";
-            return command;
-        }
     }
 
+
+    /// <summary>
+    /// Async Command class for post requst from client
+    /// </summary>
     public class AsyncCommand
     {
         public Command Command { get; private set; }

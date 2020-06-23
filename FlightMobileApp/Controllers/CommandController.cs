@@ -20,13 +20,6 @@ namespace FlightMobileApp.Controllers
             myModel = fgc;
         }
 
-        // GET: api/Command
-        [HttpGet]
-        public ActionResult<int> Get()
-        {
-            // Returns 200 status code.
-            return Ok(1);
-        }
 
         // POST: api/Command
         [HttpPost]

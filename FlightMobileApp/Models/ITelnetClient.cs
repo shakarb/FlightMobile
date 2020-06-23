@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace FlightMobileApp.Models
 {
+   
+    /// <summary>
+    ///  Our telnet connection iterface
+    /// </summary>
     public interface ITelnetClient
     {
         void connect();

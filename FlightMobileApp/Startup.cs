@@ -19,6 +19,7 @@ namespace FlightMobileApp
     {
         private IConfiguration _config;
 
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -61,6 +62,7 @@ namespace FlightMobileApp
             app.UseAuthorization();
 
             app.UseStaticFiles();
+            
 
             app.UseDefaultFiles();
 
@@ -72,8 +74,8 @@ namespace FlightMobileApp
                 // Redirect to an external URL
                 if (url.Contains("/screenshot"))
                 {
-                    context.Response.Redirect("http://10.0.2.2:" + _config["HTTPSimulatorPort"] + "/screenshot");
-                    return;   // short circuit
+                    context.Response.Redirect(_config["HTTPSimulatorIP"] +":" + _config["HTTPSimulatorPort"] + "/screenshot");
+                    return; 
                 }
 
                 await next();

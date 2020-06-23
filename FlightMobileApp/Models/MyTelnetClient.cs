@@ -19,14 +19,12 @@ namespace FlightMobileApp.Models
         }
 
         private TcpClient client;
-        private string ip;
-        private int port;
+        private readonly string ip;
+        private readonly int port;
         private StreamWriter streamWriter;
         private StreamReader streamReader;
         bool connected;
 
-        private static Mutex mutex = new Mutex();
-        public int connectionStatus { get; set; }
 
 
 
@@ -37,7 +35,10 @@ namespace FlightMobileApp.Models
             connect();
         }
 
-
+        /// <summary>
+        /// Connect to the server by info we get from contructor.
+        /// </summary>
+        /// <returns></returns>
         public void connect()
         {
             // Message.
@@ -54,7 +55,6 @@ namespace FlightMobileApp.Models
             {
                 client.Connect(ip, port);
                 Console.WriteLine("\n\n***Connection established :) ***\n\n");
-                connectionStatus = (int)ConnectionStatus.Connected;
                 connected = true;
                 //defining writer and reader for stream
                 NetworkStream stream = client.GetStream();
@@ -67,7 +67,6 @@ namespace FlightMobileApp.Models
             catch (Exception ex)
             {
                 // If connection failed
-                connectionStatus = (int)ConnectionStatus.ConnectionFailed;
                 Console.WriteLine("Error occur on simulator connection" + ex.StackTrace);
             }
         }
